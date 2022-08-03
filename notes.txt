@@ -1,0 +1,182 @@
+when make app we should write the name of app====> pages  
+
+1)     setting.py
+
+INSTALLED APPS=[
+    'pages.apps.PagesConfig',  ########write name then apps then the first letter is capital then the Config 'c'is capital 
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',]
+
+	### show the apps.py in pages ====> the first letter in the class is uppercase
+
+2)make url in the URL in URL.py in project folder ====trainningproject#######
+
+from django.urls import path,include############
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',include('pages.urls'))##### path'' http://127.0.0.1:8000/' علامات التنصيص بترمز للي هييجي بعد / ال/ انما اللس مكتوب في الانكلود ده بيرمز للملف بتاع التطبيق نفسه
+]
+
+3) create urls.py in pages====app
+
+
+
+
+					Video 7
+######################################################################################################################
+views.py
+
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
+def index(request):
+    return HttpResponse('hello mohamed')
+
+
+pages===> urls.py
+
+from django.urls import path
+from.import views
+urlpatterns=[
+    path('',views.index,name='index')
+]	
+
+open the server
+
+						video 9
+########################################################################################################################
+views.py
+
+from django.shortcuts import render
+
+
+# Create your views here.
+
+
+def index(request):
+    pass
+ ##############################################################
+ بالدجانجو عن طريق التمبلتhtml دلوقتي هربط  صفحات ال  
+
+create templates folder beside project and pages
+
+setting.py
+
+import os
+
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+ create templates==>pages==>index.html
+
+viewوبعدين اربط التمبلت بال 
+
+views.py
+
+from django.shortcuts import render
+#Create your views here.
+def index(request):
+    return render(request,'pages/index.html
+def about(request):
+   pass
+	
+					Video 10
+############################################################################################################
+
+variable and context
+
+views.py
+
+from django.shortcuts import render
+#Create your views here.
+def index(request):
+   x'nansali',
+    "age":25)
+    return render(request,'pages/index.html',x)
+def about(request):
+    pass
+
+
+
+			
+				video 11
+######################################################################################
+1)variable and 2)filter
+
+1)def index(request):
+   X={"name":"abdelrahman",
+    'age¹:25]
+   return render(request,'pages/index.html',x)
+def about(request):
+   pass
+
+and write in html  {{name}}
+
+
+2) Filter
+
+index.html
+name={{name|default:'hot found'}}
+<h1>age={{age}}</h1>
+
+
+						Video 12
+##############################################################################################################
+have two type of tage
+
+1) {% tag %}
+
+2) {% tag %}
+   {% endtag %}
+
+####### لو عاوز اعمل ناف بار في الموقع عندي بحيث يكون متواجد في كل الصفحات فبعمل صفحه في التمبلت واعملها توريث في باقي الصفحات 
+create the base.html in templates
+
+base.html
+
+<style>
+    body {
+        background: red;
+    }
+</style>
+
+
+index.html 
+
+{% extends 'base.html' %}
+
+					video 13
+###############################################################################################################
+عندي في صفحه ال   اتش تي ام ال   يا اما بتمشي بنظام اني اكتب ب ال تاجز يا اما تكون بنظام التوريث  ولو مشيت بنظام التوريث لازم اكتب الاكواد داخل ال تاجز
+
+ about.html
+
+{% extends 'base.html'%} 
+
+{% block content%}
+<h4>block content</h4> {% endblock content%}
+
+base.html
+
+
+{% block content %}
+{% endblock %}
+

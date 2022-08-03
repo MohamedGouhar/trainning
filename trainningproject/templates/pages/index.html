@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block index %}
+this block special for index
+{% endblock index %}
+this block special for index
+
+
+
+
+{% block content %}
+
+
+<h3>index.html</h3>
+{% if name == 'ali' %}
+    <p>hello ali</p>
+{% else %}
+    <p>nobody are here</p>
+{% endif %}
+
+{% for x in name %}
+<p> {{x}} </p>
+{% endfor %}
+
+
+
+
+{% endblock content %}
+
+
