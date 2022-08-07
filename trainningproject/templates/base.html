@@ -1,13 +1,6 @@
-<style>
-    body {
-        background-color: rgb(143, 75, 75);
-    }
-</style>
-{% include 'pages/parts/navbar.html'%}
-
-{% block content %}
-{% endblock %}
-
-{% block index %}{% endblock index %}
-
+{% load static %}
+<link rel='stylesheet' href="{% static 'css/style.css' %}">
+{% include 'pages/parts/navbar.html'%} 
+{% block content %} {% endblock %} 
+{% block index %}{% endblock index %} 
 {% include 'pages/parts/footer.html'%}

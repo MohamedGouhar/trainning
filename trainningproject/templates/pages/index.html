@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 
+
+
+
 {% block index %}
-this block special for index
+{% load static %}
+<img src="{% static 'image/x.png' %}" alt="not found">
+
+<hr>
+this block special for indexx
 {% endblock index %}
-this block special for index
 
 
 
