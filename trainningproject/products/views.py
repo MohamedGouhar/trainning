@@ -9,4 +9,7 @@ def product(request):
     return render(request,'products/product.html',{'pro':Products.objects.all()})
 
 def products(request):
-    return render(request,'products/products.html',{'pro':Products.objects.all()})
+    pro=Products.objects.all()
+    x={'pro':pro}
+
+    return render(request,'products/products.html',x)

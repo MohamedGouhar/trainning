@@ -1,15 +1,6 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %} {% block content %} {% for x in pro %}
 
-
-{% block content %}
-
-{% for x in pro %}
-    
-    <h1>{{x.name}}</h1>
-
-{% endfor %}
-
-<hr>
-
-
-{% endblock content %}
+<p>
+    {{x.name}}====> {{x.price}}
+</p>
+<img src="{{x.image.url}}"> {% endfor %} {% endblock content %}

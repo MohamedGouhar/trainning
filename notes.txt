@@ -396,4 +396,291 @@ class Products(models.Model):
         return self.name
 
 
+						Video 22 
+#########################################################################################################
+
+change product in admin panel to names
+ models.py
+
+
+class Products(models.Model):
+    name=models.CharField(max_length=20)
+    content=models.TextField()
+    price=models.DecimalField(max_digits=10,decimal_places=2)
+    # image=models.ImageField(upload_to='photos/%y/%m/%d')
+    active=models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+    class  Meta:
+        verbose_name = 'phone'
+
+
+
+
+
+						Video 23 
+#########################################################################################################
+
+models.py
+
+
+class Products(models.Model):
+
+    x=[
+        ('phones','phones'),
+        ('computer','computer'),   
+    ]
+    name=models.CharField(max_length=20,default='type the name')
+    content=models.TextField(default='content',null=True,blank=True)
+    price=models.DecimalField(max_digits=10,decimal_places=2)
+    image=models.ImageField(upload_to='photos/%y/%m/%d',blank=True,verbose_name='photos')
+    active=models.BooleanField(default=True)
+    category=models.CharField(max_length=20,choices=x)
+
+
+
+
+
+						Video 24 
+#########################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						Video 25
+###################################################################################################################################
+
+models.py
+
+# ############################################################################################################
+# واحد لكثير
+# علشان هو اللي هيختار كذا منتج user هعمل العلاقه في ال
+#  product هنا هعمل المنتجات الاول علشان علشان لو كتبت العكس مش هيفهم ال    
+
+class Product(models.Model):
+    title=models.CharField(max_length=50,null=True)
+    def __str__(self):
+        return  self.title
+
+
+
+
+
+class User(models.Model):
+    name=models.CharField(max_length=50,null=True)
+    def __str__(self):
+        return  self.name
+    products=models.ForeignKey(Product,on_delete=models.CASCADE)
+
+
+
+
+# كثير لكثير 
+
+
+#  مثال آخر,في حال كنت تبني قاعدة بيانات لجامعة,وتريد تخزين معلومات
+# الطلابوالمواد المسجل بها كل طالب.هنا الطالب يمكنه أن يتسجل في عدة
+# مواد في نفس الوقت,والمادة الواحدة يمكن أن يتسجل بها عدة طلاب
+
+# زي مثلا الفيديوهات والمشاهده ممكن الفيديو اكتر من واحد يشوفه والواحد يقدر يشوف اكتر من فيديو
+
+
+
+class Video(models.Model):
+    title=models.CharField(max_length=50,null=True)
+
+    def __str__(self):
+        return  self.title
+
+class Username(models.Model):
+    name=models.CharField(max_length=50,null=True)
+    watch=models.ManyToManyField(Video,null=True)
+
+    def __str__(self):
+        return  self.name
+
+
+ 
+
+admin.py
+
+from django.contrib import admin
+from .models import Female,Male,User,Product, Username, Video
+# Register your models here.
+
+
+admin.site.register(Female)
+admin.site.register(Male)
+admin.site.register(User)
+admin.site.register(Product)
+admin.site.register(Video)
+admin.site.register(Username)
+
+
+
+
+
+
+
+
+						Video 26
+########################################################################################################################
+
+Products.objects.all()
+products.object.filter()
+products.object.get()
+
+in views.py
+def products(request):
+   pro=Product.objects.all()
+   x={'pro':pro.filter(price=100)}
+   return render(request,'products/products.html',x)
+
+
+
+
+
+in views.py
+
+def products(request):
+    pro=Products.objects.all()
+    x = {'pro':pro.filter(price='1000')}
+    return render(request,'products/products.html',x)
+    
+
+
+products.html
+
+
+{%for z in pro%} 
+    <p>
+    {{z}}
+     {{z.price}}
+    </p>
+{%endfor%}
+
+
+products.html
+
+{% for x in pro %}
+<p>
+    {{x}}
+</p>
+
+{% endfor %}
+
+
+
+
+
+
+
+						Video 27
+#####################################################################################################################
+
+products.html
+
+{% for x in pro %}
+<p>
+    {{x.name}}====>
+    {{x.price}}
+</p>
+
+{% endfor %}
+
+
+
+
+
+views.py
+
+def products(request):
+    pro=Products.objects.all()
+    x = {'pro':pro.order_by('price')}
+    return render(request,'products/products.html',x)
+    
+####################### for count
+    x = {'pro':str(pro.count())}
+
+######################## for exclued 
+    x = {'pro':pro.exclude(price='1000')}
+
+
+
+
+
+
+						Video 28
+#################################################################################################################
+
+x={'pro':pro.filter(name__exact='oppo')} ###  هاتلي بالتحديد الحاجه اللي اسمها   اوبو 
+
+X={'pro':pro.filter(name__contains='d')} ## اي حاجه تحتوي على حرف ال
+
+x={'pro':pro.filter(price_in-[10,500])} ## هيظهر المنتجات اللي سعرها 100و500
+
+X={'pro':pro.filter(price_range=10,500)} ## هيظهر المنتجات الللي سعرها يتراوح ما بين 100 و 500
+
+
+
+
+
+
+
+						Video 29
+#################################################################################################################
+
+
+how to add image in the page 
+
+settings.py
+
+
+STATIC_URL = 'media/'
+STATIC_ROOT= os.path.join(BASE_DIR,"media")
+
+
+
+url.py in project
+
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',include('pages.urls')),
+    path('products/',include('products.urls'))
+] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+
+
+
+
+
+						Video 29
+#################################################################################################################
+
+
+
+
+
+
+
+
+
+
 
